@@ -26,7 +26,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base8 representation of binString or an error message
-     * @throws pr0ca1.NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException
      */
     public String convertBase2toBase8(String binString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String buffer = "";
@@ -38,7 +38,7 @@ public class BaseConverter {
             char[] bits = binString.toCharArray();
 
             // substitute every 3 bits with their octal value (from right to left)
-            for (int i = bits.length - 1; i >= 0; i--) {
+            for (int i = bits.length - 1; i > -1; i--) {
                 temp = bits[i] + temp; // prefix next bit to temp
 
                 if (temp.equalsIgnoreCase("111")) {
@@ -70,13 +70,13 @@ public class BaseConverter {
 
             // substitute any remaining bits with their octal value
             if (temp.equalsIgnoreCase("11")) {
-                buffer = buffer + "3"; // prefix 3
+                buffer = "3" + buffer; // prefix 3
             } else if (temp.equalsIgnoreCase("10")) {
-                buffer = buffer + "2"; // prefix 2
-            } else if (temp.equalsIgnoreCase("1")) {
-                buffer = buffer + "1"; // prefix 1
-            } else if (temp.equalsIgnoreCase("0")) {
-                buffer = buffer + "0"; // prefix 0
+                buffer = "2" + buffer; // prefix 2
+            } else if (temp.equalsIgnoreCase("01") || temp.equalsIgnoreCase("1")) {
+                buffer = "1" + buffer; // prefix 1
+            } else if (temp.equalsIgnoreCase("00") || temp.equalsIgnoreCase("0")) {
+                buffer = "0" + buffer; // prefix 0
             }
         } else {
             throw new NumberOutOfModeBoundsException("binString input exceeds bitPrecision!");
@@ -92,7 +92,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base10 representation of binString or an error message
-     * @throws pr0ca1.NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException
      */
     public String convertBase2toBase10(String binString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String buffer;
@@ -129,7 +129,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base16 representation of binString or an error message
-     * @throws pr0ca1.NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException
      */
     public String convertBase2toBase16(String binString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String buffer = "";
@@ -141,32 +141,32 @@ public class BaseConverter {
             char[] bits = binString.toCharArray();
 
             // substitute every 4 bits with their hexadecimal value
-            for (int i = bits.length - 1; i >= 0; i--) {
+            for (int i = bits.length - 1; i > -1; i--) {
                 temp = bits[i] + temp; // prefix next bit to temp
 
                 if (temp.equalsIgnoreCase("1111")) {
-                    buffer = "F" + buffer; // append F
+                    buffer = "F" + buffer; // prefix F
                     temp = ""; // clear temp
                 } else if (temp.equalsIgnoreCase("1110")) {
-                    buffer = "E" + buffer; // append E
+                    buffer = "E" + buffer; // prefix E
                     temp = ""; // clear temp
                 } else if (temp.equalsIgnoreCase("1101")) {
-                    buffer = "D" + buffer; // append D
+                    buffer = "D" + buffer; // prefix D
                     temp = ""; // clear temp
                 } else if (temp.equalsIgnoreCase("1100")) {
-                    buffer = "C" + buffer; // append C
+                    buffer = "C" + buffer; // prefix C
                     temp = ""; // clear temp
                 } else if (temp.equalsIgnoreCase("1011")) {
-                    buffer = "B" + buffer; // append B
+                    buffer = "B" + buffer; // prefix B
                     temp = ""; // clear temp
                 } else if (temp.equalsIgnoreCase("1010")) {
-                    buffer = "A" + buffer; // append A
+                    buffer = "A" + buffer; // prefix A
                     temp = ""; // clear temp
                 } else if (temp.equalsIgnoreCase("1001")) {
-                    buffer = "9" + buffer; // append 9
+                    buffer = "9" + buffer; // prefix 9
                     temp = ""; // clear temp
                 } else if (temp.equalsIgnoreCase("1000")) {
-                    buffer = "8" + buffer; // append 8
+                    buffer = "8" + buffer; // prefix 8
                     temp = ""; // clear temp
                 } else if (temp.equalsIgnoreCase("0111")) {
                     buffer = "7" + buffer; // prefix 7
@@ -204,13 +204,13 @@ public class BaseConverter {
                 buffer = "5" + buffer; // prefix 5
             } else if (temp.equalsIgnoreCase("100")) {
                 buffer = "4" + buffer; // prefix 4
-            } else if (temp.equalsIgnoreCase("11")) {
+            } else if (temp.equalsIgnoreCase("011") || temp.equalsIgnoreCase("11")) {
                 buffer = "3" + buffer; // prefix 3
-            } else if (temp.equalsIgnoreCase("10")) {
+            } else if (temp.equalsIgnoreCase("010") || temp.equalsIgnoreCase("10")) {
                 buffer = "2" + buffer; // prefix 2
-            } else if (temp.equalsIgnoreCase("1")) {
+            } else if (temp.equalsIgnoreCase("001") || temp.equalsIgnoreCase("01") || temp.equalsIgnoreCase("1")) {
                 buffer = "1" + buffer; // prefix 1
-            } else if (temp.equalsIgnoreCase("0")) {
+            } else if (temp.equalsIgnoreCase("000") || temp.equalsIgnoreCase("00") || temp.equalsIgnoreCase("0")) {
                 buffer = "0" + buffer; // prefix 0
             }
         } else {
@@ -230,7 +230,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base2 representation of octString or an error message
-     * @throws pr0ca1.NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException
      */
     public String convertBase8toBase2(String octString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String buffer = "";
@@ -292,7 +292,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base10 representation of octString or an error message
-     * @throws pr0ca1.NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException
      */
     public String convertBase8toBase10(String octString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String binString = convertBase8toBase2(octString, bitPrecision, signed); // throws exception on failure
@@ -306,7 +306,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base16 representation of octString or an error message
-     * @throws pr0ca1.NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException
      */
     public String convertBase8toBase16(String octString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String binString = convertBase8toBase2(octString, bitPrecision, signed); // throws exception on failure
@@ -323,7 +323,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base2 representation of decInteger or an error message
-     * @throws pr0ca1.NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException
      */
     public String convertBase10toBase2(String decString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String buffer;
@@ -361,7 +361,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base8 representation of decInteger or an error message
-     * @throws pr0ca1.NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException
      */
     public String convertBase10toBase8(String decInteger, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String binString = convertBase10toBase2(decInteger, bitPrecision, signed); // throws exception on failure
@@ -375,7 +375,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base16 representation of decInteger or an error message
-     * @throws pr0ca1.NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException
      */
     public String convertBase10toBase16(String decInteger, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String binString = convertBase10toBase2(decInteger, bitPrecision, signed); // throws exception on failure
@@ -392,7 +392,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base2 representation of hexString or an error message
-     * @throws pr0ca1.NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException
      */
     public String convertBase16toBase2(String hexString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String buffer = "";
@@ -486,7 +486,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base8 representation of hexString or an error message
-     * @throws pr0ca1.NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException
      */
     public String convertBase16toBase8(String hexString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String binString = convertBase16toBase2(hexString, bitPrecision, signed); // throws exception on failure
@@ -500,7 +500,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base8 representation of hexString or an error message
-     * @throws pr0ca1.NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException
      */
     public String convertBase16toBase10(String hexString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String binString = convertBase16toBase2(hexString, bitPrecision, signed); // throws exception on failure

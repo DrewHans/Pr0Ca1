@@ -51,7 +51,7 @@ public class Pr0Number {
     /**
      * appendBinValue Method
      *
-     * @param binValue
+     * @param binValue - a single base 2 string
      * @throws NumberOutOfModeBoundsException
      */
     public void appendBinValue(String binValue) throws NumberOutOfModeBoundsException {
@@ -62,7 +62,7 @@ public class Pr0Number {
     /**
      * appendOctValue Method
      *
-     * @param octValue
+     * @param octValue - a single base 8 string
      * @throws NumberOutOfModeBoundsException
      */
     public void appendOctValue(String octValue) throws NumberOutOfModeBoundsException {
@@ -73,7 +73,7 @@ public class Pr0Number {
     /**
      * appendDecValue Method
      *
-     * @param decValue
+     * @param decValue - a single base 10 string
      * @throws NumberOutOfModeBoundsException
      */
     public void appendDecValue(String decValue) throws NumberOutOfModeBoundsException {
@@ -84,7 +84,7 @@ public class Pr0Number {
     /**
      * appendHexValue Method
      *
-     * @param hexValue
+     * @param hexValue - a single base 16 string
      * @throws NumberOutOfModeBoundsException
      */
     public void appendHexValue(String hexValue) throws NumberOutOfModeBoundsException {
@@ -103,12 +103,24 @@ public class Pr0Number {
     }//end clearValues method
 
     /**
+     * copyPr0Number Method - takes an existing Pr0Number and copies its values
+     *
+     * @param originalPr0Number - an existing Pr0Number
+     */
+    public void copyPr0Number(Pr0Number originalPr0Number) {
+        this.binString = originalPr0Number.getBinValue();
+        this.octString = originalPr0Number.getOctValue();
+        this.decString = originalPr0Number.getDecValue();
+        this.hexString = originalPr0Number.getHexValue();
+    }
+
+    /**
      * deappendBinValue Method
      *
      * @throws NumberOutOfModeBoundsException
      */
     public void deappendBinValue() throws NumberOutOfModeBoundsException {
-        if (this.octString.length() != 0) {
+        if (this.binString.length() > 0) {
             this.binString = this.binString.substring(0, this.binString.length() - 1);
             this.onBinStringUpdate(); //efficient code reuse
         }
@@ -120,7 +132,7 @@ public class Pr0Number {
      * @throws NumberOutOfModeBoundsException
      */
     public void deappendOctValue() throws NumberOutOfModeBoundsException {
-        if (this.octString.length() != 0) {
+        if (this.octString.length() > 0) {
             this.octString = this.octString.substring(0, this.octString.length() - 1);
             this.onOctStringUpdate(); //efficient code reuse
         }
@@ -132,7 +144,7 @@ public class Pr0Number {
      * @throws NumberOutOfModeBoundsException
      */
     public void deappendDecValue() throws NumberOutOfModeBoundsException {
-        if (this.decString.length() != 0) {
+        if (this.decString.length() > 0) {
             this.decString = this.decString.substring(0, this.decString.length() - 1);
             this.onDecStringUpdate(); //efficient code reuse
         }
@@ -144,7 +156,7 @@ public class Pr0Number {
      * @throws NumberOutOfModeBoundsException
      */
     public void deappendHexValue() throws NumberOutOfModeBoundsException {
-        if (this.hexString.length() != 0) {
+        if (this.hexString.length() > 0) {
             this.hexString = this.hexString.substring(0, this.hexString.length() - 1);
             this.onHexStringUpdate(); //efficient code reuse
         }
@@ -187,49 +199,83 @@ public class Pr0Number {
     }//end getHexValue method
 
     /**
+     * getBitPrecision Method
+     *
+     * @return the bitPrecision value for all Pr0Number objects
+     */
+    public static int getBitPrecision() {
+        return bitPrecision;
+    }//end getBitPrecision method
+
+    /**
+     * getIsSigned Method
+     *
+     * @return the isSigned value for all Pr0Number objects
+     */
+    public static boolean getIsSigned() {
+        return isSigned;
+    }//end getIsSigned method
+
+    /**
      * onBinStringUpdate Method
      */
     private void onBinStringUpdate() throws NumberOutOfModeBoundsException {
-        this.binString = truncZero(this.binString);
-        this.octString = truncZero(baseConverter.convertBase2toBase8(this.binString, bitPrecision, isSigned));
-        this.decString = truncZero(baseConverter.convertBase2toBase10(this.binString, bitPrecision, isSigned));
-        this.hexString = truncZero(baseConverter.convertBase2toBase16(this.binString, bitPrecision, isSigned));
+        if (this.binString.length() == 0) {
+            this.clearValues();
+        } else {
+            this.binString = truncZero(this.binString);
+            this.octString = truncZero(baseConverter.convertBase2toBase8(this.binString, bitPrecision, isSigned));
+            this.decString = truncZero(baseConverter.convertBase2toBase10(this.binString, bitPrecision, isSigned));
+            this.hexString = truncZero(baseConverter.convertBase2toBase16(this.binString, bitPrecision, isSigned));
+        }
     }//end onBinStringUpdate method
 
     /**
      * onOctStringUpdate Method
      */
     private void onOctStringUpdate() throws NumberOutOfModeBoundsException {
-        this.octString = truncZero(this.octString);
-        this.binString = truncZero(baseConverter.convertBase8toBase2(this.octString, bitPrecision, isSigned));
-        this.decString = truncZero(baseConverter.convertBase8toBase10(this.octString, bitPrecision, isSigned));
-        this.hexString = truncZero(baseConverter.convertBase8toBase16(this.octString, bitPrecision, isSigned));
+        if (this.octString.length() == 0) {
+            this.clearValues();
+        } else {
+            this.octString = truncZero(this.octString);
+            this.binString = truncZero(baseConverter.convertBase8toBase2(this.octString, bitPrecision, isSigned));
+            this.decString = truncZero(baseConverter.convertBase2toBase10(this.binString, bitPrecision, isSigned));
+            this.hexString = truncZero(baseConverter.convertBase2toBase16(this.binString, bitPrecision, isSigned));
+        }
     }//end onOctStringUpdate method
 
     /**
      * onDecStringUpdate Method
      */
     private void onDecStringUpdate() throws NumberOutOfModeBoundsException {
-        this.decString = truncZero(this.decString);
-        this.binString = truncZero(baseConverter.convertBase10toBase2(this.decString, bitPrecision, isSigned));
-        this.octString = truncZero(baseConverter.convertBase10toBase8(this.decString, bitPrecision, isSigned));
-        this.hexString = truncZero(baseConverter.convertBase10toBase16(this.decString, bitPrecision, isSigned));
+        if (this.decString.length() == 0) {
+            this.clearValues();
+        } else {
+            this.decString = truncZero(this.decString);
+            this.binString = truncZero(baseConverter.convertBase10toBase2(this.decString, bitPrecision, isSigned));
+            this.octString = truncZero(baseConverter.convertBase2toBase8(this.binString, bitPrecision, isSigned));
+            this.hexString = truncZero(baseConverter.convertBase2toBase16(this.binString, bitPrecision, isSigned));
+        }
     }//end onDecStringUpdate method
 
     /**
      * onHexStringUpdate Method
      */
     private void onHexStringUpdate() throws NumberOutOfModeBoundsException {
-        this.hexString = truncZero(this.hexString);
-        this.binString = truncZero(baseConverter.convertBase16toBase2(this.hexString, bitPrecision, isSigned));
-        this.octString = truncZero(baseConverter.convertBase16toBase8(this.hexString, bitPrecision, isSigned));
-        this.decString = truncZero(baseConverter.convertBase16toBase10(this.hexString, bitPrecision, isSigned));
+        if (this.hexString.length() == 0) {
+            this.clearValues();
+        } else {
+            this.hexString = truncZero(this.hexString);
+            this.binString = truncZero(baseConverter.convertBase16toBase2(this.hexString, bitPrecision, isSigned));
+            this.octString = truncZero(baseConverter.convertBase2toBase8(this.binString, bitPrecision, isSigned));
+            this.decString = truncZero(baseConverter.convertBase2toBase10(this.binString, bitPrecision, isSigned));
+        }
     }//end onHexStringUpdate method
 
     /**
      * setBinValue Method
      *
-     * @param binValue
+     * @param binValue - a base 2 number string representing some value x
      * @throws NumberOutOfModeBoundsException
      */
     public void setBinValue(String binValue) throws NumberOutOfModeBoundsException {
@@ -240,7 +286,7 @@ public class Pr0Number {
     /**
      * setOctValue Method
      *
-     * @param octValue
+     * @param octValue - a base 8 number string representing some value x
      * @throws NumberOutOfModeBoundsException
      */
     public void setOctValue(String octValue) throws NumberOutOfModeBoundsException {
@@ -251,7 +297,7 @@ public class Pr0Number {
     /**
      * setDecValue Method
      *
-     * @param decValue
+     * @param decValue - a base 10 number string representing some value x
      * @throws NumberOutOfModeBoundsException
      */
     public void setDecValue(String decValue) throws NumberOutOfModeBoundsException {
@@ -262,7 +308,7 @@ public class Pr0Number {
     /**
      * setHexValue Method
      *
-     * @param hexValue
+     * @param hexValue - a base 16 number string representing some value x
      * @throws NumberOutOfModeBoundsException
      */
     public void setHexValue(String hexValue) throws NumberOutOfModeBoundsException {

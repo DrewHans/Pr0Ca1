@@ -22,14 +22,16 @@ public class BooleanLogicOperator {
     /**
      * not Method - Takes in a string of 1s and 0s and flips the bits
      *
-     * @param binNum - assume a String of 1s and 0s
+     * @param bitPrecision - the number of bits available for representing not-binString
+     * @param binString    - assume a String of 1s and 0s
      * @return flipped bit version of binNum
      */
-    public String not(String binNum) {
-        binNum = binNum.replace("0", "x"); // temporarily set 0s to xs
-        binNum = binNum.replace("1", "0"); // set 1s to 0s
-        binNum = binNum.replace("x", "1"); // set xs to 1s
-        return binNum;
+    public String not(int bitPrecision, String binString) {
+        binString = String.format("%" + bitPrecision + "s", binString).replace(' ', '0'); //pad with zeros when necessary
+        binString = binString.replace("0", "x"); // temporarily set 0s to xs
+        binString = binString.replace("1", "0"); // set 1s to 0s
+        binString = binString.replace("x", "1"); // set xs to 1s
+        return binString;
     }//end not method
 
     /**
@@ -123,35 +125,38 @@ public class BooleanLogicOperator {
      * nand Method - Takes in two binary numbers as Strings and returns the bitwise NAND of input1 and input2 as a
      * String
      *
-     * @param input1 - first binary number
-     * @param input2 - second binary number
+     * @param bitPrecision - the number of bits available for representing nand
+     * @param input1       - first binary number
+     * @param input2       - second binary number
      * @return bitwise NAND of input1 and input2 as a String
      */
-    public String nand(String input1, String input2) {
-        return this.not(this.and(input1, input2));
+    public String nand(int bitPrecision, String input1, String input2) {
+        return this.not(bitPrecision, this.and(input1, input2));
     }//end not method
 
     /**
      * not Method - Takes in two binary numbers as Strings and returns the bitwise NOR of input1 and input2 as a String
      *
-     * @param input1 - first binary number
-     * @param input2 - second binary number
+     * @param bitPrecision - the number of bits available for representing nor
+     * @param input1       - first binary number
+     * @param input2       - second binary number
      * @return bitwise NOR of input1 and input2 as a String
      */
-    public String nor(String input1, String input2) {
-        return this.not(this.or(input1, input2));
+    public String nor(int bitPrecision, String input1, String input2) {
+        return this.not(bitPrecision, this.or(input1, input2));
     }//end not method
 
     /**
      * xnor Method - Takes in two binary numbers as Strings and returns the bitwise XNOR of input1 and input2 as a
      * String
      *
-     * @param input1 - first binary number
-     * @param input2 - second binary number
+     * @param bitPrecision - the number of bits available for representing xnor
+     * @param input1       - first binary number
+     * @param input2       - second binary number
      * @return bitwise XNOR of input1 and input2 as a String
      */
-    public String xnor(String input1, String input2) {
-        return this.not(this.xor(input1, input2));
+    public String xnor(int bitPrecision, String input1, String input2) {
+        return this.not(bitPrecision, this.xor(input1, input2));
     }//end not method
 
 }//end BooleanLogicOperator class
