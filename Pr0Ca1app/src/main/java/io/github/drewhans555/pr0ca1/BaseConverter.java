@@ -26,13 +26,15 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base8 representation of binString or an error message
-     * @throws NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException when binString input exceeds bitPrecision
      */
     public String convertBase2toBase8(String binString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String buffer = "";
 
-        // check that binString does not exceed our bitPrecision
-        if (this.binStringIsWithinBounds(binString, bitPrecision)) {
+        // check that binString is not empty and does not exceed our bitPrecision
+        if (binString.isEmpty()) {
+            buffer = "";
+        } else if (this.binStringIsWithinBounds(binString, bitPrecision)) {
             // initialize variables for the for-loop
             String temp = "";
             char[] bits = binString.toCharArray();
@@ -92,14 +94,16 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base10 representation of binString or an error message
-     * @throws NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException when binString input exceeds bitPrecision
      */
     public String convertBase2toBase10(String binString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String buffer;
         long temp;
 
-        // check that binString does not exceed our bitPrecision
-        if (this.binStringIsWithinBounds(binString, bitPrecision)) {
+        // check that binString is not empty and does not exceed our bitPrecision
+        if (binString.isEmpty()) {
+            buffer = "";
+        } else if (this.binStringIsWithinBounds(binString, bitPrecision)) {
             // pad with zeros when necessary (assume user forgot to input zeros for positive signed value)
             binString = String.format("%" + bitPrecision + "s", binString).replace(' ', '0');
 
@@ -129,13 +133,15 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base16 representation of binString or an error message
-     * @throws NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException when binString input exceeds bitPrecision
      */
     public String convertBase2toBase16(String binString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String buffer = "";
 
-        // check that binString does not exceed our bitPrecision
-        if (this.binStringIsWithinBounds(binString, bitPrecision)) {
+        // check that binString is not empty and does not exceed our bitPrecision
+        if (binString.isEmpty()) {
+            buffer = "";
+        } else if (this.binStringIsWithinBounds(binString, bitPrecision)) {
             // initialize variables for the for-loop
             String temp = "";
             char[] bits = binString.toCharArray();
@@ -230,17 +236,19 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base2 representation of octString or an error message
-     * @throws NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException when octString input exceeds bitPrecision
      */
     public String convertBase8toBase2(String octString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String buffer = "";
 
-        // check that octString does not exceed our base2 bitPrecision
-        if (this.octStringIsWithinBounds(octString, bitPrecision)) {
+        // check that octString is not empty and does not exceed our base2 bitPrecision
+        if (octString.isEmpty()) {
+            buffer = "";
+        } else if (this.octStringIsWithinBounds(octString, bitPrecision)) {
             // initialize variable for the for-loop
             char[] bits = octString.toCharArray();
 
-            // substitute every hexadecimal value with the approriate binary value
+            // substitute every hexadecimal value with the appropriate binary value
             for (int i = 0; i < bits.length; i++) {
 
                 if (bits[i] == '7') {
@@ -292,7 +300,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base10 representation of octString or an error message
-     * @throws NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException when octString input exceeds bitPrecision
      */
     public String convertBase8toBase10(String octString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String binString = convertBase8toBase2(octString, bitPrecision, signed); // throws exception on failure
@@ -306,7 +314,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base16 representation of octString or an error message
-     * @throws NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException when octString input exceeds bitPrecision
      */
     public String convertBase8toBase16(String octString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String binString = convertBase8toBase2(octString, bitPrecision, signed); // throws exception on failure
@@ -323,12 +331,15 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base2 representation of decInteger or an error message
-     * @throws NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException when decString input exceeds bitPrecision or Long.parseLong throws NumberFormatException
      */
     public String convertBase10toBase2(String decString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String buffer;
 
-        if (decStringIsWithinBounds(decString, bitPrecision, signed)) {
+        // check that decString is not empty and does not exceed our base2 bitPrecision
+        if (decString.isEmpty()) {
+            buffer = "";
+        } else if (decStringIsWithinBounds(decString, bitPrecision, signed)) {
             long decValue;
             try {
                 decValue = Long.parseLong(decString);
@@ -361,7 +372,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base8 representation of decInteger or an error message
-     * @throws NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException when decString input exceeds bitPrecision or Long.parseLong throws NumberFormatException
      */
     public String convertBase10toBase8(String decInteger, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String binString = convertBase10toBase2(decInteger, bitPrecision, signed); // throws exception on failure
@@ -375,7 +386,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base16 representation of decInteger or an error message
-     * @throws NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException when decString input exceeds bitPrecision or Long.parseLong throws NumberFormatException
      */
     public String convertBase10toBase16(String decInteger, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String binString = convertBase10toBase2(decInteger, bitPrecision, signed); // throws exception on failure
@@ -392,17 +403,19 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base2 representation of hexString or an error message
-     * @throws NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException when hexString input exceeds bitPrecision
      */
     public String convertBase16toBase2(String hexString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String buffer = "";
 
-        // check that hexString does not exceed our base2 bitPrecision
-        if (this.hexStringIsWithinBounds(hexString, bitPrecision)) {
+        // check that hexString is not empty and does not exceed our base2 bitPrecision
+        if (hexString.isEmpty()) {
+            buffer = "";
+        } else if (this.hexStringIsWithinBounds(hexString, bitPrecision)) {
             // initialize variable for the for-loop
             char[] bits = hexString.toCharArray();
 
-            // substitute every hexadecimal value with the approriate binary value
+            // substitute every hexadecimal value with the appropriate binary value
             for (int i = 0; i < bits.length; i++) {
 
                 if (bits[i] == 'F') {
@@ -486,7 +499,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base8 representation of hexString or an error message
-     * @throws NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException when hexString input exceeds bitPrecision
      */
     public String convertBase16toBase8(String hexString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String binString = convertBase16toBase2(hexString, bitPrecision, signed); // throws exception on failure
@@ -500,7 +513,7 @@ public class BaseConverter {
      * @param bitPrecision - any bit precision in range 5 - 32 will work for both signed/unsigned
      * @param signed       - a boolean that indicates two's compliment conversion
      * @return a string base8 representation of hexString or an error message
-     * @throws NumberOutOfModeBoundsException
+     * @throws NumberOutOfModeBoundsException when hexString input exceeds bitPrecision
      */
     public String convertBase16toBase10(String hexString, int bitPrecision, boolean signed) throws NumberOutOfModeBoundsException {
         String binString = convertBase16toBase2(hexString, bitPrecision, signed); // throws exception on failure
@@ -517,7 +530,7 @@ public class BaseConverter {
      * @param bitPrecision - the number of binary bits we have to represent binString
      * @return true if binString is within our bitPrecision bounds
      */
-    public boolean binStringIsWithinBounds(String binString, int bitPrecision) {
+    private boolean binStringIsWithinBounds(String binString, int bitPrecision) {
         return binString.length() <= bitPrecision;
     }//end binStringIsWithinBounds method
 
@@ -645,4 +658,3 @@ public class BaseConverter {
     }//end unsignedBinaryStringToPositiveDecimalInt method
 
 }//end BaseConverter class
-

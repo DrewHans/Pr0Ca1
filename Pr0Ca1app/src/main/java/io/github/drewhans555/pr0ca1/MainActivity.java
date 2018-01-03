@@ -2,18 +2,16 @@ package io.github.drewhans555.pr0ca1;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * onCreate Method - initializes our activity
      *
-     * @param savedInstanceState
+     * @param savedInstanceState - used to recreate the activity if previously created
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +62,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         // leave everything above this line alone in onCreate method
-
-        resizeGUI();
 
         // initialize our TextView GUI objects
         tvBINlabel = (TextView) findViewById(R.id.BINText);
@@ -108,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * onCreateOptionsMenu Method - initializes the contents of the Activity's standard options menu
      *
-     * @param menu
+     * @param menu - the option menu
      * @return true on success
      */
     @Override
@@ -121,8 +117,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * onOptionsItemSelected Method - called whenever an item in your options menu is selected
      *
-     * @param item
-     * @return
+     * @param item - an item from the option menu
+     * @return super.onOptionsItemSelected(item)
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -147,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -177,66 +173,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             setTitle(getString(R.string.signed32bit));
         }
 
-        this.resetCalculator();
+        this.operationSelected = null;
+        this.currentNumber.clearValues();
+        this.previousNumber.clearValues();
+        clearTextViews();
+        showToast("Mode changed!");
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }//end onNavigationItemSelected method
-
-    /**
-     * resizeGUI Method - manually scales GUI elements to match device's height and width
-     */
-    private void resizeGUI() {
-        // get the device's height and width in pixels
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int heightPxs = metrics.heightPixels;
-        int widthPxs = metrics.widthPixels;
-
-        // manually resize the outter LinearLayout
-        LinearLayout linearLayoutContainer = (LinearLayout) findViewById(R.id.linearLayoutContainer);
-        LayoutParams linearLayoutParams = linearLayoutContainer.getLayoutParams();
-        linearLayoutParams.width = widthPxs;
-        linearLayoutParams.height = heightPxs;
-
-        /*
-        // manually resize each LinearLayout button row so that each button's height = width (square buttons look better)
-        int buttonWidth = widthPxs / 4; //4 buttons per row => each button has widthPxs/4 of width (except for the equal button)
-
-        LinearLayout linearLayoutButtonRow1 = (LinearLayout) findViewById(R.id.linearLayoutButtonRow1);
-        LayoutParams linearLayoutBR1Params = linearLayoutButtonRow1.getLayoutParams();
-        linearLayoutBR1Params.height = buttonWidth;
-
-        LinearLayout linearLayoutButtonRow2 = (LinearLayout) findViewById(R.id.linearLayoutButtonRow2);
-        LayoutParams linearLayoutBR2Params = linearLayoutButtonRow2.getLayoutParams();
-        linearLayoutBR2Params.height = buttonWidth;
-
-        LinearLayout linearLayoutButtonRow3 = (LinearLayout) findViewById(R.id.linearLayoutButtonRow3);
-        LayoutParams linearLayoutBR3Params = linearLayoutButtonRow3.getLayoutParams();
-        linearLayoutBR3Params.height = buttonWidth;
-
-        LinearLayout linearLayoutButtonRow4 = (LinearLayout) findViewById(R.id.linearLayoutButtonRow4);
-        LayoutParams linearLayoutBR4Params = linearLayoutButtonRow4.getLayoutParams();
-        linearLayoutBR4Params.height = buttonWidth;
-
-        LinearLayout linearLayoutButtonRow5 = (LinearLayout) findViewById(R.id.linearLayoutButtonRow5);
-        LayoutParams linearLayoutBR5Params = linearLayoutButtonRow5.getLayoutParams();
-        linearLayoutBR5Params.height = buttonWidth;
-
-        LinearLayout linearLayoutButtonRow6 = (LinearLayout) findViewById(R.id.linearLayoutButtonRow6);
-        LayoutParams linearLayoutBR6Params = linearLayoutButtonRow6.getLayoutParams();
-        linearLayoutBR6Params.height = buttonWidth;
-
-        LinearLayout linearLayoutButtonRow7 = (LinearLayout) findViewById(R.id.linearLayoutButtonRow7);
-        LayoutParams linearLayoutBR7Params = linearLayoutButtonRow7.getLayoutParams();
-        linearLayoutBR7Params.height = buttonWidth;
-
-        LinearLayout linearLayoutButtonRow8 = (LinearLayout) findViewById(R.id.linearLayoutButtonRow8);
-        LayoutParams linearLayoutBR8Params = linearLayoutButtonRow8.getLayoutParams();
-        linearLayoutBR8Params.height = buttonWidth;
-         */
-    }//end resizeGUI method
-
 
     /**
      * onPressBin Method - called when user pressed the BIN TextView
@@ -633,8 +579,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     this.updateTextViews();
                 }
             }
+        } catch (NumberOutOfModeBoundsException iae) {
+            this.showToast("NumberOutOfModeBoundsException thrown. Calculator will now be reset.");
+            this.resetCalculator();
+        } catch (IllegalArgumentException iae) {
+            this.showToast("IllegalArgumentException thrown. Calculator will now be reset.");
+            this.resetCalculator();
         } catch (Exception e) {
-            this.showInputErrToast();
+            this.showToast("Exception thrown. Calculator will now be reset.");
             this.resetCalculator();
         }
     }//end onPressEqual method
@@ -646,6 +598,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     public void onPressAc(View view) {
         this.resetCalculator();
+        this.showResetToast();
     }//end onPressAC method
 
     /**
@@ -656,20 +609,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onPressDel(View view) {
         try {
             if (tvBIN.getText().toString().length() > 0 && inputMode.equalsIgnoreCase(getString(R.string.BIN))) {
-                this.currentNumber.deappendBinValue();
+                this.currentNumber.deAppendBinValue();
                 updateTextViews(); //only update on change
             } else if (tvDEC.getText().toString().length() > 0 && inputMode.equalsIgnoreCase(getString(R.string.DEC))) {
-                this.currentNumber.deappendDecValue();
+                this.currentNumber.deAppendDecValue();
                 updateTextViews(); //only update on change
             } else if (tvOCT.getText().toString().length() > 0 && inputMode.equalsIgnoreCase(getString(R.string.OCT))) {
-                this.currentNumber.deappendOctValue();
+                this.currentNumber.deAppendOctValue();
                 updateTextViews(); //only update on change
             } else if (tvHEX.getText().toString().length() > 0 && inputMode.equalsIgnoreCase(getString(R.string.HEX))) {
-                this.currentNumber.deappendHexValue();
+                this.currentNumber.deAppendHexValue();
                 updateTextViews(); //only update on change
             }
         } catch (Exception e) {
-            this.showInputErrToast();
+            this.showToast("Invalid input. Calculator will now be reset.");
             this.resetCalculator();
         }
     }//end onPressDel method
@@ -684,7 +637,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String legalOctInputs = "01234567";
         String legalDecInputs = "0123456789";
         String legalHexInputs = "0123456789ABCDEF";
-        String buffer;
 
         try {
             if (inputMode.equalsIgnoreCase(getString(R.string.BIN)) && legalBinInputs.contains(buttonValue) && tvBIN.length() + 1 < 33) {
@@ -708,7 +660,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * clearTextViews Method - clears all of our TextViews
      */
-    public void clearTextViews() {
+    private void clearTextViews() {
         tvBIN.setText("");
         tvOCT.setText("");
         tvDEC.setText("");
@@ -718,12 +670,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      * resetCalculator Method - resets calculator state
      */
-    public void resetCalculator() {
+    private void resetCalculator() {
         this.operationSelected = null;
         this.currentNumber.clearValues();
         this.previousNumber.clearValues();
         clearTextViews();
-        showCalculatorResetToast();
     }//end resetCalculator method
 
     /**
@@ -731,7 +682,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      *
      * @param view - View object that gets passed in on call
      */
-    public void setNextOperation(View view, String op) {
+    private void setNextOperation(View view, String op) {
         if (this.operationSelected != null) {
             this.onPressEqual(view);
         }
@@ -741,40 +692,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     /**
      * setPreviousInput Method - called whenever we need to store user input
-     *
-     * @param view - View object that gets passed in on call
      */
-    public void setPreviousNumber() {
+    private void setPreviousNumber() {
         this.previousNumber.copyPr0Number(this.currentNumber);
         this.currentNumber.clearValues();
     }//end setPreviousInput method
 
     /**
-     * showCalculatorResetToast Method - called after resetCalculator method is called
+     * showResetToast Method - should be called after calling resetCalculator method
      */
-    public void showCalculatorResetToast() {
-        Context context = getApplicationContext();
-        CharSequence text = "The calculator has been reset.";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-    }//end showCalculatorResetToast method
+    private void showResetToast() {
+        this.showToast("The calculator has been reset.");
+    }//end showResetToast
 
     /**
-     * showInputErrToast Method - called whenever an exception is caught in setPreviousInput
+     * showToast Method - called whenever our controller wants to show user Toast
      */
-    public void showInputErrToast() {
+    private void showToast(String msg) {
         Context context = getApplicationContext();
-        CharSequence text = "Invalid input. Calculator will now be reset.";
         int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
+        Toast toast = Toast.makeText(context, msg, duration);
         toast.show();
-    }//end showPreviousInputErrToast method
+    }//end showToast method
 
     /**
      * updateTextViews Method - updates the TextViews with the currentNumber's bin/oct/dec/hex values
      */
-    public void updateTextViews() {
+    private void updateTextViews() {
         tvBIN.setText(this.currentNumber.getBinValue());
         tvOCT.setText(this.currentNumber.getOctValue());
         tvDEC.setText(this.currentNumber.getDecValue());

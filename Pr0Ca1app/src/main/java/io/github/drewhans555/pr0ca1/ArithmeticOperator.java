@@ -64,9 +64,14 @@ public class ArithmeticOperator {
      * @param dec1 - dividend
      * @param dec2 - divisor
      * @return quotient
-     * @throws NumberFormatException on Long.parseLong error
+     * @throws NumberFormatException    on Long.parseLong error
+     * @throws IllegalArgumentException on divisor == 0
      */
     public String div(String dec1, String dec2) throws NumberFormatException {
+        if (Long.parseLong(dec2) == 0) {
+            throw new IllegalArgumentException("Argument 'dec2 - divisor' is 0");
+        }
+
         long value = Long.parseLong(dec1) / Long.parseLong(dec2);
         return "" + (value);
     }//end div method
@@ -77,9 +82,14 @@ public class ArithmeticOperator {
      * @param dec1 - modulo dividend
      * @param dec2 - modulo divisor
      * @return remainder
-     * @throws NumberFormatException on Long.parseLong error
+     * @throws NumberFormatException    on Long.parseLong error
+     * @throws IllegalArgumentException on modulo divisor == 0
      */
     public String mod(String dec1, String dec2) throws NumberFormatException {
+        if (Long.parseLong(dec2) == 0) {
+            throw new IllegalArgumentException("Argument 'dec2 - modulo divisor' is 0");
+        }
+
         long value = Long.parseLong(dec1) % Long.parseLong(dec2);
         return "" + (value);
     }//end mod method

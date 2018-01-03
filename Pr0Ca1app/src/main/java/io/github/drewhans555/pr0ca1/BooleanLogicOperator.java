@@ -24,7 +24,7 @@ public class BooleanLogicOperator {
      *
      * @param bitPrecision - the number of bits available for representing not-binString
      * @param binString    - assume a String of 1s and 0s
-     * @return flipped bit version of binNum
+     * @return bitwise NOT of binString (after padding with 0s) as a String
      */
     public String not(int bitPrecision, String binString) {
         binString = String.format("%" + bitPrecision + "s", binString).replace(' ', '0'); //pad with zeros when necessary
