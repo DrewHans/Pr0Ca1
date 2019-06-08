@@ -4,19 +4,10 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Drew Hans on 1/3/2018.
- *
- * @author Jessica Cramer(https://github.com/JessicaCramer117)
- * @author Hannah Goett(https://github.com/hannahgoett)
- * @author Drew Hans(https://github.com/DrewHans555)
- * @author Ashley Holcomb(https://github.com/ashleyholcomb)
- * @author Braydon Rekart(https://github.com/BRekart)
- */
 public class BaseConverterTest {
     @Test
     public void convertBase2toBase8() throws Exception {
-        BaseConverter converter = new BaseConverter();
+        BaseConverter converter = new BaseConverter(new BoundsChecker());
 
         // test convertBase2toBase8 unsigned base cases
         assertEquals("", converter.convertBase2toBase8("", 3, false));
@@ -111,7 +102,7 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase2toBase10() throws Exception {
-        BaseConverter converter = new BaseConverter();
+        BaseConverter converter = new BaseConverter(new BoundsChecker());
 
         // test convertBase2toBase10 unsigned base cases
         assertEquals("", converter.convertBase2toBase10("", 4, false));
@@ -256,7 +247,7 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase2toBase16() throws Exception {
-        BaseConverter converter = new BaseConverter();
+        BaseConverter converter = new BaseConverter(new BoundsChecker());
 
         // test convertBase2toBase16 unsigned base cases
         assertEquals("", converter.convertBase2toBase16("", 4, false));
@@ -400,7 +391,7 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase8toBase2() throws Exception {
-        BaseConverter converter = new BaseConverter();
+        BaseConverter converter = new BaseConverter(new BoundsChecker());
 
         // test convertBase8toBase2 unsigned base cases
         assertEquals("", converter.convertBase8toBase2("", 3, false));
@@ -478,7 +469,7 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase8toBase10() throws Exception {
-        BaseConverter converter = new BaseConverter();
+        BaseConverter converter = new BaseConverter(new BoundsChecker());
 
         // original unit tests
         //4 bit unsigned
@@ -509,7 +500,7 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase8toBase16() throws Exception {
-        BaseConverter converter = new BaseConverter();
+        BaseConverter converter = new BaseConverter(new BoundsChecker());
 
         // original unit tests
         //4 bit unsigned
@@ -540,7 +531,7 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase10toBase2() throws Exception {
-        BaseConverter converter = new BaseConverter();
+        BaseConverter converter = new BaseConverter(new BoundsChecker());
 
         // test convertBase10toBase2 unsigned base cases
         assertEquals("", converter.convertBase10toBase2("", 4, false));
@@ -634,7 +625,7 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase10toBase8() throws Exception {
-        BaseConverter converter = new BaseConverter();
+        BaseConverter converter = new BaseConverter(new BoundsChecker());
 
         // original unit tests
         //4 bit unsigned
@@ -665,7 +656,7 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase10toBase16() throws Exception {
-        BaseConverter converter = new BaseConverter();
+        BaseConverter converter = new BaseConverter(new BoundsChecker());
 
         // original unit tests
         //4 bit unsigned
@@ -696,7 +687,7 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase16toBase2() throws Exception {
-        BaseConverter converter = new BaseConverter();
+        BaseConverter converter = new BaseConverter(new BoundsChecker());
 
         // test convertBase16toBase2 unsigned base cases
         assertEquals("", converter.convertBase16toBase2("", 4, false));
@@ -806,7 +797,7 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase16toBase8() throws Exception {
-        BaseConverter converter = new BaseConverter();
+        BaseConverter converter = new BaseConverter(new BoundsChecker());
 
         // original unit tests
         //4 bit unsigned
@@ -837,7 +828,7 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase16toBase10() throws Exception {
-        BaseConverter converter = new BaseConverter();
+        BaseConverter converter = new BaseConverter(new BoundsChecker());
 
         // original unit tests
         //4 bit unsigned

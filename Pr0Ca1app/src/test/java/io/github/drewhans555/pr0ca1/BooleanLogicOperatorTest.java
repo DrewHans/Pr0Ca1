@@ -4,15 +4,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Drew Hans on 1/3/2018.
- *
- * @author Jessica Cramer(https://github.com/JessicaCramer117)
- * @author Hannah Goett(https://github.com/hannahgoett)
- * @author Drew Hans(https://github.com/DrewHans555)
- * @author Ashley Holcomb(https://github.com/ashleyholcomb)
- * @author Braydon Rekart(https://github.com/BRekart)
- */
 public class BooleanLogicOperatorTest {
     @Test
     public void not() throws Exception {

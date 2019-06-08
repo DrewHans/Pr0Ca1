@@ -4,11 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by Drew Hans on 1/3/2018.
- *
- * @author Drew Hans(https://github.com/DrewHans555)
- */
+// TODO
 public class Pr0NumberTest {
     @Test
     public void appendBinValue() throws Exception {
