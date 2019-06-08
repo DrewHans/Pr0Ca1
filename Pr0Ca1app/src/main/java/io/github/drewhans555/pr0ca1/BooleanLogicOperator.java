@@ -2,22 +2,13 @@ package io.github.drewhans555.pr0ca1;
 
 /**
  * BooleanLogicOperator Class - Creates a BooleanLogicOperator object that can perform not, and, or, xor, nand, nor, and
- * xnor operations using base 2 numbers. Formerly part of the [Super] Model(s) Class.
- *
- * @author Jessica Cramer(https://github.com/JessicaCramer117)
- * @author Hannah Goett(https://github.com/hannahgoett)
- * @author Drew Hans(https://github.com/DrewHans555)
- * @author Ashley Holcomb(https://github.com/ashleyholcomb)
- * @author Braydon Rekart(https://github.com/BRekart)
+ * xnor operations using base 2 numbers.
  */
 public class BooleanLogicOperator {
 
-    /**
-     * BooleanLogicOperator Constructor
-     */
     public BooleanLogicOperator() {
 
-    }//end BooleanLogicOperator constructor
+    }
 
     /**
      * not Method - Takes in a string of 1s and 0s and flips the bits
@@ -32,7 +23,7 @@ public class BooleanLogicOperator {
         binString = binString.replace("1", "0"); // set 1s to 0s
         binString = binString.replace("x", "1"); // set xs to 1s
         return binString;
-    }//end not method
+    }
 
     /**
      * and Method - Takes in two binary numbers as Strings and returns the bitwise AND of input1 and input2 as a String
@@ -61,7 +52,7 @@ public class BooleanLogicOperator {
             }
         }
         return buffer;
-    }//end not method
+    }
 
     /**
      * or Method - Takes in two binary numbers as Strings and returns the bitwise OR of input1 and input2 as a String
@@ -90,7 +81,7 @@ public class BooleanLogicOperator {
             }
         }
         return buffer;
-    }//end not method
+    }
 
     /**
      * xor Method - Takes in two binary numbers as Strings and returns the bitwise XOR of input1 and input2 as a String
@@ -119,7 +110,7 @@ public class BooleanLogicOperator {
             }
         }
         return buffer;
-    }//end not method
+    }
 
     /**
      * nand Method - Takes in two binary numbers as Strings and returns the bitwise NAND of input1 and input2 as a
@@ -132,7 +123,7 @@ public class BooleanLogicOperator {
      */
     public String nand(int bitPrecision, String input1, String input2) {
         return this.not(bitPrecision, this.and(input1, input2));
-    }//end not method
+    }
 
     /**
      * not Method - Takes in two binary numbers as Strings and returns the bitwise NOR of input1 and input2 as a String
@@ -144,7 +135,7 @@ public class BooleanLogicOperator {
      */
     public String nor(int bitPrecision, String input1, String input2) {
         return this.not(bitPrecision, this.or(input1, input2));
-    }//end not method
+    }
 
     /**
      * xnor Method - Takes in two binary numbers as Strings and returns the bitwise XNOR of input1 and input2 as a
@@ -157,6 +148,6 @@ public class BooleanLogicOperator {
      */
     public String xnor(int bitPrecision, String input1, String input2) {
         return this.not(bitPrecision, this.xor(input1, input2));
-    }//end not method
+    }
 
-}//end BooleanLogicOperator class
+}
