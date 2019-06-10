@@ -4,7 +4,7 @@ package io.github.drewhans555.pr0ca1;
  * ArithmeticOperator Class - Creates an ArithmeticOperator object that can perform addition, subtraction,
  * multiplication, division, and modulo operations using base 10 numbers.
  */
-public class ArithmeticOperator {
+public class ArithmeticOperator implements IArithmeticOperator {
 
     public ArithmeticOperator() {
 

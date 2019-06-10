@@ -1,27 +1,27 @@
 package io.github.drewhans555.pr0ca1;
 
-public class Pr0Calculator {
+public class Pr0Calculator implements IPr0Calculator {
     private Pr0Mode inputMode;
     private Pr0Operation operationSelected;
-    private Pr0Number previousNumber;
-    private Pr0Number currentNumber;
-    private ArithmeticOperator arithmeticOperator;
-    private BooleanLogicOperator booleanLogicOperator;
+    private IPr0Number previousNumber;
+    private IPr0Number currentNumber;
+    private IArithmeticOperator arithmeticOperator;
+    private IBooleanLogicOperator booleanLogicOperator;
 
-    public Pr0Calculator(int bitState, boolean signState, Pr0Mode inputState) {
-        arithmeticOperator = new ArithmeticOperator();
-        booleanLogicOperator = new BooleanLogicOperator();
-        previousNumber = new Pr0Number(bitState, signState);
-        currentNumber = new Pr0Number(bitState, signState);
+    public Pr0Calculator(IArithmeticOperator aOp, IBooleanLogicOperator bOp, IPr0Number preNum, IPr0Number curNum, Pr0Mode inputState) {
+        arithmeticOperator = aOp;
+        booleanLogicOperator = bOp;
+        previousNumber = preNum;
+        currentNumber = curNum;
         inputMode = inputState;
         operationSelected = Pr0Operation.NONE;
     }
 
-    public Pr0Number getCurrentNumber() {
+    public IPr0Number getCurrentNumber() {
         return currentNumber;
     }
 
-    public Pr0Number getPreviousNumber() {
+    public IPr0Number getPreviousNumber() {
         return previousNumber;
     }
 
@@ -95,7 +95,7 @@ public class Pr0Calculator {
             return;
         }
 
-        currentNumber.setBinValue(booleanLogicOperator.not(Pr0Number.getBitPrecision(), currentNumber.getBinValue()));
+        currentNumber.setBinValue(booleanLogicOperator.not(currentNumber.getBitPrecision(), currentNumber.getBinValue()));
         operationSelected = Pr0Operation.NONE;
         previousNumber.clearValues();
     }
@@ -213,7 +213,7 @@ public class Pr0Calculator {
     }
 
     public void updateState(int newBitState, boolean newSignState) {
-        Pr0Number.updateState(newBitState, newSignState);
+        currentNumber.updateState(newBitState, newSignState);
         operationSelected = Pr0Operation.NONE;
         currentNumber.clearValues();
         previousNumber.clearValues();
@@ -260,11 +260,11 @@ public class Pr0Calculator {
         } else if (operationSelected == Pr0Operation.XOR) {
             currentNumber.setBinValue(booleanLogicOperator.xor(previousNumber.getBinValue(), currentNumber.getBinValue()));
         } else if (operationSelected == Pr0Operation.NAND) {
-            currentNumber.setBinValue(booleanLogicOperator.nand(Pr0Number.getBitPrecision(), previousNumber.getBinValue(), currentNumber.getBinValue()));
+            currentNumber.setBinValue(booleanLogicOperator.nand(currentNumber.getBitPrecision(), previousNumber.getBinValue(), currentNumber.getBinValue()));
         } else if (operationSelected == Pr0Operation.NOR) {
-            currentNumber.setBinValue(booleanLogicOperator.nor(Pr0Number.getBitPrecision(), previousNumber.getBinValue(), currentNumber.getBinValue()));
+            currentNumber.setBinValue(booleanLogicOperator.nor(currentNumber.getBitPrecision(), previousNumber.getBinValue(), currentNumber.getBinValue()));
         } else if (operationSelected == Pr0Operation.XNOR) {
-            currentNumber.setBinValue(booleanLogicOperator.xnor(Pr0Number.getBitPrecision(), previousNumber.getBinValue(), currentNumber.getBinValue()));
+            currentNumber.setBinValue(booleanLogicOperator.xnor(currentNumber.getBitPrecision(), previousNumber.getBinValue(), currentNumber.getBinValue()));
         } else if (operationSelected == Pr0Operation.ADD) {
             currentNumber.setDecValue(arithmeticOperator.add(previousNumber.getDecValue(), currentNumber.getDecValue()));
         } else if (operationSelected == Pr0Operation.SUB) {

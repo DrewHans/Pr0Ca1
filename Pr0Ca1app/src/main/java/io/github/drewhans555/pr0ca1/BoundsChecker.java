@@ -1,6 +1,6 @@
 package io.github.drewhans555.pr0ca1;
 
-public class BoundsChecker {
+public class BoundsChecker implements IBoundsChecker {
 
     /**
      * binStringIsWithinBounds Method

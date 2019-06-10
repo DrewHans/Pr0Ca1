@@ -4,10 +4,10 @@ package io.github.drewhans555.pr0ca1;
  * BaseConverter Class - Creates a BaseConverter object that can perform number base conversions between base 2, base 8,
  * base 10, and base 16 numbers.
  */
-public class BaseConverter {
-    private BoundsChecker boundChecker;
+public class BaseConverter implements IBaseConverter {
+    private IBoundsChecker boundChecker;
 
-    public BaseConverter(BoundsChecker bc) {
+    public BaseConverter(IBoundsChecker bc) {
         boundChecker = bc;
     }
 

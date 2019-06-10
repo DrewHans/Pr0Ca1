@@ -4,7 +4,7 @@ package io.github.drewhans555.pr0ca1;
  * BooleanLogicOperator Class - Creates a BooleanLogicOperator object that can perform not, and, or, xor, nand, nor, and
  * xnor operations using base 2 numbers.
  */
-public class BooleanLogicOperator {
+public class BooleanLogicOperator implements IBooleanLogicOperator {
 
     public BooleanLogicOperator() {
 

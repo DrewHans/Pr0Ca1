@@ -2,13 +2,13 @@ package io.github.drewhans555.pr0ca1;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Pr0Calculator pr0Calculator;
+    private IPr0Calculator pr0Calculator;
 
     private TextView tvBINlabel;
     private TextView tvOCTlabel;
@@ -45,11 +45,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         // leave everything above this line alone in onCreate method
 
-        // initialize our Pr0Number objects
+        // initialize our concrete objects & inject dependencies
         int bitState = 32;
         boolean signState = true;
         Pr0Mode inputState = Pr0Mode.DEC;
-        pr0Calculator = new Pr0Calculator(bitState, signState, inputState);
+        IArithmeticOperator arithmeticOperator = new ArithmeticOperator();
+        IBooleanLogicOperator booleanLogicOperator = new BooleanLogicOperator();
+        IBoundsChecker boundsChecker = new BoundsChecker();
+        IBaseConverter baseConverter = new BaseConverter(boundsChecker);
+        IPr0Number previousNumber = new Pr0Number(baseConverter, boundsChecker, bitState, signState);
+        IPr0Number currentNumber = new Pr0Number(baseConverter, boundsChecker, bitState, signState);
+
+        pr0Calculator = new Pr0Calculator(arithmeticOperator, booleanLogicOperator, previousNumber, currentNumber, inputState);
 
         // initialize our TextView GUI objects
         tvBINlabel = (TextView) findViewById(R.id.BINText);
@@ -414,7 +421,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void updateTextViews() {
-        Pr0Number currentNumber = pr0Calculator.getCurrentNumber();
+        IPr0Number currentNumber = pr0Calculator.getCurrentNumber();
         tvBIN.setText(currentNumber.getBinValue());
         tvOCT.setText(currentNumber.getOctValue());
         tvDEC.setText(currentNumber.getDecValue());

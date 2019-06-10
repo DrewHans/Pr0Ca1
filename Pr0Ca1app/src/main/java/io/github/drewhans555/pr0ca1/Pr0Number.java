@@ -1,9 +1,9 @@
 package io.github.drewhans555.pr0ca1;
 
-public class Pr0Number {
+public class Pr0Number implements IPr0Number {
 
-    private static BaseConverter baseConverter;
-    private static BoundsChecker boundChecker;
+    private static IBaseConverter baseConverter;
+    private static IBoundsChecker boundChecker;
     private static int bitPrecision;
     private static boolean isSigned;
     private String binString;
@@ -11,17 +11,13 @@ public class Pr0Number {
     private String decString;
     private String hexString;
 
-    public Pr0Number() {
-        boundChecker = new BoundsChecker();
-        baseConverter = new BaseConverter(boundChecker);
+    public Pr0Number(IBaseConverter baseCon, IBoundsChecker boundsChec, int bitState, boolean signState) {
         this.binString = "";
         this.octString = "";
         this.decString = "";
         this.hexString = "";
-    }
-
-    public Pr0Number(int bitState, boolean signState) {
-        this();
+        baseConverter = baseCon;
+        boundChecker = boundsChec;
         bitPrecision = bitState;
         isSigned = signState;
     }
@@ -49,7 +45,7 @@ public class Pr0Number {
         this.hexString = "";
     }
 
-    public void copyPr0Number(Pr0Number originalPr0Number) {
+    public void copyPr0Number(IPr0Number originalPr0Number) {
         this.binString = originalPr0Number.getBinValue();
         this.octString = originalPr0Number.getOctValue();
         this.decString = originalPr0Number.getDecValue();
@@ -96,11 +92,11 @@ public class Pr0Number {
         return this.hexString;
     }
 
-    public static int getBitPrecision() {
+    public int getBitPrecision() {
         return bitPrecision;
     }
 
-    public static boolean getIsSigned() {
+    public boolean getIsSigned() {
         return isSigned;
     }
 
@@ -180,7 +176,7 @@ public class Pr0Number {
         return string.replaceFirst("^0+(?!$)", "");
     }
 
-    public static void updateState(int newBitState, boolean newSignState) {
+    public void updateState(int newBitState, boolean newSignState) {
         bitPrecision = newBitState;
         isSigned = newSignState;
     }
