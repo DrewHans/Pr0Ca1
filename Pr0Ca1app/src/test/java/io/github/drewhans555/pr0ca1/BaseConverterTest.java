@@ -2,12 +2,17 @@ package io.github.drewhans555.pr0ca1;
 
 import org.junit.Test;
 
+import static org.mockito.Mockito.*;
+
 import static org.junit.Assert.*;
 
 public class BaseConverterTest {
     @Test
     public void convertBase2toBase8() throws Exception {
-        BaseConverter converter = new BaseConverter(new BoundsChecker());
+        IBoundsChecker stubChecker = mock(IBoundsChecker.class);
+        BaseConverter converter = new BaseConverter(stubChecker);
+
+        when(stubChecker.binStringIsWithinBounds(anyString(), anyInt())).thenReturn(true);
 
         // test convertBase2toBase8 unsigned base cases
         assertEquals("", converter.convertBase2toBase8("", 3, false));
@@ -102,7 +107,10 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase2toBase10() throws Exception {
-        BaseConverter converter = new BaseConverter(new BoundsChecker());
+        IBoundsChecker stubChecker = mock(IBoundsChecker.class);
+        BaseConverter converter = new BaseConverter(stubChecker);
+
+        when(stubChecker.binStringIsWithinBounds(anyString(), anyInt())).thenReturn(true);
 
         // test convertBase2toBase10 unsigned base cases
         assertEquals("", converter.convertBase2toBase10("", 4, false));
@@ -247,7 +255,10 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase2toBase16() throws Exception {
-        BaseConverter converter = new BaseConverter(new BoundsChecker());
+        IBoundsChecker stubChecker = mock(IBoundsChecker.class);
+        BaseConverter converter = new BaseConverter(stubChecker);
+
+        when(stubChecker.binStringIsWithinBounds(anyString(), anyInt())).thenReturn(true);
 
         // test convertBase2toBase16 unsigned base cases
         assertEquals("", converter.convertBase2toBase16("", 4, false));
@@ -391,7 +402,10 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase8toBase2() throws Exception {
-        BaseConverter converter = new BaseConverter(new BoundsChecker());
+        IBoundsChecker stubChecker = mock(IBoundsChecker.class);
+        BaseConverter converter = new BaseConverter(stubChecker);
+
+        when(stubChecker.octStringIsWithinBounds(anyString(), anyInt())).thenReturn(true);
 
         // test convertBase8toBase2 unsigned base cases
         assertEquals("", converter.convertBase8toBase2("", 3, false));
@@ -469,7 +483,11 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase8toBase10() throws Exception {
-        BaseConverter converter = new BaseConverter(new BoundsChecker());
+        IBoundsChecker stubChecker = mock(IBoundsChecker.class);
+        BaseConverter converter = new BaseConverter(stubChecker);
+
+        when(stubChecker.octStringIsWithinBounds(anyString(), anyInt())).thenReturn(true);
+        when(stubChecker.binStringIsWithinBounds(anyString(), anyInt())).thenReturn(true);
 
         // original unit tests
         //4 bit unsigned
@@ -500,7 +518,11 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase8toBase16() throws Exception {
-        BaseConverter converter = new BaseConverter(new BoundsChecker());
+        IBoundsChecker stubChecker = mock(IBoundsChecker.class);
+        BaseConverter converter = new BaseConverter(stubChecker);
+
+        when(stubChecker.octStringIsWithinBounds(anyString(), anyInt())).thenReturn(true);
+        when(stubChecker.binStringIsWithinBounds(anyString(), anyInt())).thenReturn(true);
 
         // original unit tests
         //4 bit unsigned
@@ -531,7 +553,10 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase10toBase2() throws Exception {
-        BaseConverter converter = new BaseConverter(new BoundsChecker());
+        IBoundsChecker stubChecker = mock(IBoundsChecker.class);
+        BaseConverter converter = new BaseConverter(stubChecker);
+
+        when(stubChecker.decStringIsWithinBounds(anyString(), anyInt(), anyBoolean())).thenReturn(true);
 
         // test convertBase10toBase2 unsigned base cases
         assertEquals("", converter.convertBase10toBase2("", 4, false));
@@ -625,7 +650,11 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase10toBase8() throws Exception {
-        BaseConverter converter = new BaseConverter(new BoundsChecker());
+        IBoundsChecker stubChecker = mock(IBoundsChecker.class);
+        BaseConverter converter = new BaseConverter(stubChecker);
+
+        when(stubChecker.decStringIsWithinBounds(anyString(), anyInt(), anyBoolean())).thenReturn(true);
+        when(stubChecker.binStringIsWithinBounds(anyString(), anyInt())).thenReturn(true);
 
         // original unit tests
         //4 bit unsigned
@@ -656,7 +685,11 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase10toBase16() throws Exception {
-        BaseConverter converter = new BaseConverter(new BoundsChecker());
+        IBoundsChecker stubChecker = mock(IBoundsChecker.class);
+        BaseConverter converter = new BaseConverter(stubChecker);
+
+        when(stubChecker.decStringIsWithinBounds(anyString(), anyInt(), anyBoolean())).thenReturn(true);
+        when(stubChecker.binStringIsWithinBounds(anyString(), anyInt())).thenReturn(true);
 
         // original unit tests
         //4 bit unsigned
@@ -687,7 +720,10 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase16toBase2() throws Exception {
-        BaseConverter converter = new BaseConverter(new BoundsChecker());
+        IBoundsChecker stubChecker = mock(IBoundsChecker.class);
+        BaseConverter converter = new BaseConverter(stubChecker);
+
+        when(stubChecker.hexStringIsWithinBounds(anyString(), anyInt())).thenReturn(true);
 
         // test convertBase16toBase2 unsigned base cases
         assertEquals("", converter.convertBase16toBase2("", 4, false));
@@ -797,7 +833,11 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase16toBase8() throws Exception {
-        BaseConverter converter = new BaseConverter(new BoundsChecker());
+        IBoundsChecker stubChecker = mock(IBoundsChecker.class);
+        BaseConverter converter = new BaseConverter(stubChecker);
+
+        when(stubChecker.hexStringIsWithinBounds(anyString(), anyInt())).thenReturn(true);
+        when(stubChecker.binStringIsWithinBounds(anyString(), anyInt())).thenReturn(true);
 
         // original unit tests
         //4 bit unsigned
@@ -828,7 +868,11 @@ public class BaseConverterTest {
 
     @Test
     public void convertBase16toBase10() throws Exception {
-        BaseConverter converter = new BaseConverter(new BoundsChecker());
+        IBoundsChecker stubChecker = mock(IBoundsChecker.class);
+        BaseConverter converter = new BaseConverter(stubChecker);
+
+        when(stubChecker.hexStringIsWithinBounds(anyString(), anyInt())).thenReturn(true);
+        when(stubChecker.binStringIsWithinBounds(anyString(), anyInt())).thenReturn(true);
 
         // original unit tests
         //4 bit unsigned

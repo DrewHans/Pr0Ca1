@@ -8,7 +8,6 @@ import static org.junit.Assert.*;
 public class Pr0NumberTest {
     @Test
     public void appendBinValue() throws Exception {
-        Pr0Number pr0Number = new Pr0Number();
     }
 
     @Test

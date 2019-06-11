@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class BooleanLogicOperatorTest {
     @Test
-    public void not() throws Exception {
+    public void not() {
         BooleanLogicOperator operator = new BooleanLogicOperator();
         assertEquals("11101", operator.not(5, "00010"));
         assertEquals("00010", operator.not(5, "11101"));
@@ -20,7 +20,7 @@ public class BooleanLogicOperatorTest {
     }
 
     @Test
-    public void and() throws Exception {
+    public void and() {
         BooleanLogicOperator operator = new BooleanLogicOperator();
         assertEquals("010", operator.and("010", "011"));
         assertEquals("110", operator.and("110", "111"));
@@ -31,7 +31,7 @@ public class BooleanLogicOperatorTest {
     }
 
     @Test
-    public void or() throws Exception {
+    public void or() {
         BooleanLogicOperator operator = new BooleanLogicOperator();
         assertEquals("011", operator.or("010", "011"));
         assertEquals("111", operator.or("110", "111"));
@@ -42,7 +42,7 @@ public class BooleanLogicOperatorTest {
     }
 
     @Test
-    public void xor() throws Exception {
+    public void xor() {
         BooleanLogicOperator operator = new BooleanLogicOperator();
         assertEquals("001", operator.xor("010", "011"));
         assertEquals("001", operator.xor("110", "111"));
@@ -53,7 +53,7 @@ public class BooleanLogicOperatorTest {
     }
 
     @Test
-    public void nand() throws Exception {
+    public void nand() {
         BooleanLogicOperator operator = new BooleanLogicOperator();
         assertEquals("101", operator.nand(3, "010", "011"));
         assertEquals("001", operator.nand(3, "110", "111"));
@@ -64,7 +64,7 @@ public class BooleanLogicOperatorTest {
     }
 
     @Test
-    public void nor() throws Exception {
+    public void nor() {
         BooleanLogicOperator operator = new BooleanLogicOperator();
         assertEquals("100", operator.nor(3, "010", "011"));
         assertEquals("000", operator.nor(3, "110", "111"));
@@ -75,7 +75,7 @@ public class BooleanLogicOperatorTest {
     }
 
     @Test
-    public void xnor() throws Exception {
+    public void xnor() {
         BooleanLogicOperator operator = new BooleanLogicOperator();
         assertEquals("110", operator.xnor(3, "010", "011"));
         assertEquals("110", operator.xnor(3, "110", "111"));
