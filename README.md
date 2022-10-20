@@ -1,6 +1,17 @@
 # Pr0Ca1
 Pr0Ca1 is a free, open source programmer's calculator for Android 4.4 KitKat and higher.
 
+
+
+[<img src="https://raw.githubusercontent.com/DrewHans/DrewHans.github.io/master/assets/images/third-party/google-play-badge.png"
+      alt="Get it on Google Play"
+      height="80">](https://play.google.com/store/apps/details?id=io.github.drewhans555.pr0ca1&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1)
+[<img src="https://raw.githubusercontent.com/DrewHans/DrewHans.github.io/master/assets/images/third-party/amazon-appstore-badge.png"
+      alt="Get it on Amazon App Store"
+      height="80">](https://www.amazon.com/gp/product/B07S9SH6VZ/ref=mas_pm_Pr0Ca1)
+
+
+
 #### App Features:
 * displays numbers in binary, octal, decimal, & hexadecimal
 * allows switching between DEC, HEX, OCT, & BIN input modes
